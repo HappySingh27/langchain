@@ -18,8 +18,11 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from typing import TypedDict,Annotated,Optional,Literal
+from pathlib import Path
 
 load_dotenv()
+
+review_text = Path('movie_review.txt').read_text()
 
 model = ChatOpenAI()
 
@@ -41,7 +44,7 @@ class Review(TypedDict):
 
 #methods responsible for returning structured data
 structured_model = model.with_structured_output(Review) 
-result = structured_model.invoke("Javan is not so good Movie")
+result = structured_model.invoke(review_text)
 
 print(result)
 print(result['summary'])

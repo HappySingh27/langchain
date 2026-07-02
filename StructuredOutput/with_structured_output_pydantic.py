@@ -1,35 +1,23 @@
-"""
-Pydantic - Data Validation and Parsing Library
+from pydantic import BaseModel,Field
+from typing import Literal,Optional
+from pathlib import Path
+from langchain_openai import ChatOpenAI
 
-Description:
-    Pydantic is a data validation and data parsing library for Python. 
-    It ensures that the data you work with is correct, structured, and type-safe.
 
-Key Concepts:
-    1. Basic example
-    2. Default values - Set default values for model fields
-    3. Optional fields - Make fields optional with Optional type hint
-    4. Coerce - Convert/coerce data to correct types
-    5. Built-in validation - Automatic type checking and validation
-    6. Field Function - Allows:
-       - Setting default values
-       - Adding constraints
-       - Adding descriptions
-       - Using regex expressions for validation
-    7. Pydantic object - Returns a Pydantic model object
-       - Convert to JSON using .model_dump_json()
-       - Convert to dict using .model_dump()
-"""
 
-from pydantic import BaseModel
+review = Path('movie_review.txt').read_text()
 
-class Student(BaseModel):
-    name: str
-    surname: str = 'Singh' #default value can be provided
+# schema of my pydantic
+class Review(BaseModel):
 
-new_student = {'name':'happy'}
+    key_themes: list[str] = Field(description ='Write down all key themes discussed in review in a list')
+    summary: str = Field(description='A brief summary of the review')
+    sentiment: Literal['pos','neg'] = Field(description='Write sentiment of review as positive, negative or neutral')
+    pros: Optional[list[str]] = Field(default = None,description='positive points about review, if any')
+    cons: Optional[list[str]] = Field(default = None,description='write negative points about review, if any')
+    name: Optional[str] = Field(default = None, description='Write name of the protoganist')
 
-student = Student(**new_student)
-print(student)
-print(type(student))
+model = ChatOpenAI().with_structured_output(Review)
+result = model.invoke(review)
 
+print(result.key_themes)
