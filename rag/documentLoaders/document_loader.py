@@ -3,7 +3,7 @@ Document Loaders are the components in Langchain used to load data from various 
 into a standarized format usually a (Documents objects) which then can be used for chunking 
 embedding, retrieval and generation.
 
-Many tupes of Document Loader are  there, all document loader lie in
+Many types of Document Loader are  there, all document loader lie in
 langachain_community(this is depricated now) package
 
 Loader converts docs in list of docs
@@ -35,6 +35,11 @@ from langchain_community.document_loaders import TextLoader
 # for now passing path of the file to be loaded
 loader = TextLoader('movie_review.txt', encoding='utf-8')
 
+#docs would contain list of docs
 docs = loader.load()
 
-print(docs)
+#print(docs)
+print(type(docs))
+print(docs[0].metadata)
+#print(docs[1])
+print(len(docs))

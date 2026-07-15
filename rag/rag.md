@@ -24,3 +24,10 @@ RAG is highly favored by organizations and developers because it solves major is
 2. Text Splitter
 3. Vector Databases
 4. Retrievers
+
+## Todo
+1. Learn fine tuning theory & practical both, advantages, disadvantages, limitations, use cases
+2. In context learning
+    - In-Context Learning is a core capability of Large Language Models (LLMs) like
+    GPT-3/4, Claude, and Llama, where the model learns to solve a task purely by seeing examples in the
+    prompt—without updating its weights.
